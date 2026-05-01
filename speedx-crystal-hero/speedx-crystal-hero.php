@@ -18,13 +18,11 @@ final class SpeedX_Crystal_Hero_Plugin
 {
     const VERSION = '1.0.0';
 
-    private static $shortcode_used = false;
-
     public function __construct()
     {
         add_shortcode('speedx_crystal_hero', array($this, 'render_shortcode'));
         add_action('wp_enqueue_scripts', array($this, 'register_assets'));
-        add_action('wp_enqueue_scripts', array($this, 'conditionally_enqueue_assets'));
+        add_action('wp_enqueue_scripts', array($this, 'conditionally_enqueue_assets'), 20);
         add_action('admin_menu', array($this, 'register_admin_page'));
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'add_settings_link'));
     }
@@ -65,10 +63,24 @@ final class SpeedX_Crystal_Hero_Plugin
 
     public function conditionally_enqueue_assets()
     {
-        if (!self::$shortcode_used) {
+        if (!is_singular()) {
             return;
         }
 
+        $post = get_post();
+        if (!$post instanceof WP_Post) {
+            return;
+        }
+
+        if (!has_shortcode($post->post_content, 'speedx_crystal_hero')) {
+            return;
+        }
+
+        $this->enqueue_assets();
+    }
+
+    private function enqueue_assets()
+    {
         wp_enqueue_style('speedx-crystal-hero-style');
         wp_enqueue_script('speedx-three-js');
         wp_enqueue_script('speedx-gsap');
@@ -109,7 +121,7 @@ final class SpeedX_Crystal_Hero_Plugin
 
     public function render_shortcode($atts = array(), $content = null)
     {
-        self::$shortcode_used = true;
+        $this->enqueue_assets();
 
         ob_start();
         ?>
