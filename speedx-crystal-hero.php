@@ -25,6 +25,8 @@ final class SpeedX_Crystal_Hero_Plugin
         add_shortcode('speedx_crystal_hero', array($this, 'render_shortcode'));
         add_action('wp_enqueue_scripts', array($this, 'register_assets'));
         add_action('wp_enqueue_scripts', array($this, 'conditionally_enqueue_assets'));
+        add_action('admin_menu', array($this, 'register_admin_page'));
+        add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'add_settings_link'));
     }
 
     public function register_assets()
@@ -71,6 +73,38 @@ final class SpeedX_Crystal_Hero_Plugin
         wp_enqueue_script('speedx-three-js');
         wp_enqueue_script('speedx-gsap');
         wp_enqueue_script('speedx-crystal-hero-script');
+    }
+
+
+
+    public function register_admin_page()
+    {
+        add_options_page(
+            'SpeedX Crystal Hero',
+            'SpeedX Crystal Hero',
+            'manage_options',
+            'speedx-crystal-hero',
+            array($this, 'render_admin_page')
+        );
+    }
+
+    public function add_settings_link($links)
+    {
+        $url = admin_url('options-general.php?page=speedx-crystal-hero');
+        array_unshift($links, '<a href="' . esc_url($url) . '">Settings</a>');
+        return $links;
+    }
+
+    public function render_admin_page()
+    {
+        ?>
+        <div class="wrap">
+            <h1>SpeedX Crystal Hero</h1>
+            <p>Plugin is active. Use this shortcode on any page, post, or Elementor Shortcode widget:</p>
+            <code>[speedx_crystal_hero]</code>
+            <p>Tip: place the shortcode in a full-width section for best visual impact.</p>
+        </div>
+        <?php
     }
 
     public function render_shortcode($atts = array(), $content = null)
