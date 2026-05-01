@@ -2,11 +2,16 @@
   'use strict';
 
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasWebGL = !!window.WebGLRenderingContext;
 
   function initHero(root) {
     var canvas = root.querySelector('.speedx-crystal-canvas');
     var content = root.querySelector('.speedx-hero__content');
-    if (!canvas || typeof THREE === 'undefined') return;
+    if (!canvas) return;
+    if (typeof THREE === 'undefined' || !hasWebGL) {
+      root.classList.add('speedx-no-webgl');
+      return;
+    }
 
     root.classList.add('speedx-js');
 
@@ -23,6 +28,7 @@
         content.style.transform = 'translateY(0)';
       }
       root.classList.remove('speedx-js');
+      root.classList.add('speedx-no-webgl');
       return;
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -30,7 +36,7 @@
     var group = new THREE.Group();
     scene.add(group);
 
-    var geometry = new THREE.IcosahedronGeometry(1.15, 24);
+    var geometry = new THREE.IcosahedronGeometry(1.15, 5);
     var material = new THREE.MeshPhysicalMaterial({
       color: 0xffcd0e,
       emissive: 0x9a6e00,
