@@ -57,7 +57,6 @@
 }
 
 .speedx-hero__content { opacity: 1; transform: none; }
-.speedx-hero.speedx-js .speedx-hero__content { opacity: 0; transform: translateY(30px); }
 .speedx-hero__title { font-size: clamp(2rem, 4vw, 4rem); line-height: 1.08; margin: 0 0 1rem; }
 .speedx-hero__subtitle { font-size: clamp(1rem, 1.8vw, 1.25rem); color: rgba(255, 255, 255, 0.82); max-width: 46ch; margin: 0 0 1.6rem; }
 .speedx-hero__button {
@@ -105,3 +104,13 @@
   0%, 100% { transform: translateY(0) scale(1); }
   50% { transform: translateY(-10px) scale(1.03); }
 }
+
+.speedx-crystal-fallback {
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff2b8 0%, #ffcd0e 20%, rgba(255,205,14,0.3) 52%, rgba(255,205,14,0.02) 75%);
+  filter: blur(1px) drop-shadow(0 0 46px rgba(255,205,14,.38));
+  animation: speedx-float 4.2s ease-in-out infinite;
+}
+.speedx-hero.speedx-rendered .speedx-crystal-fallback { opacity: 0; }

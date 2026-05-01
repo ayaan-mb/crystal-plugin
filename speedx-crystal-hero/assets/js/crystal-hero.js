@@ -122,6 +122,8 @@
     var pos = geometry.attributes.position;
     var base = new Float32Array(pos.array);
 
+    var hasRenderedFrame = false;
+
     function animate(t) {
       requestAnimationFrame(animate);
       if (!visibilityActive) return;
@@ -172,6 +174,10 @@
       }
 
       renderer.render(scene, camera);
+      if (!hasRenderedFrame) {
+        root.classList.add('speedx-rendered');
+        hasRenderedFrame = true;
+      }
     }
 
     resize();

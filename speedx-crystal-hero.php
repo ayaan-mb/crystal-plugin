@@ -131,6 +131,7 @@ final class SpeedX_Crystal_Hero_Plugin
                 <div class="speedx-hero__visual">
                     <div class="speedx-crystal-wrap">
                         <canvas class="speedx-crystal-canvas" aria-hidden="true"></canvas>
+                        <div class="speedx-crystal-fallback" aria-hidden="true"></div>
                         <div class="speedx-crystal-hint">Click, hold & drag</div>
                     </div>
                 </div>
