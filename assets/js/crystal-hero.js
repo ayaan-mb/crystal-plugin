@@ -8,11 +8,23 @@
     var content = root.querySelector('.speedx-hero__content');
     if (!canvas || typeof THREE === 'undefined') return;
 
+    root.classList.add('speedx-js');
+
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
     camera.position.set(0, 0, 4.2);
 
-    var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+    var renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+    } catch (err) {
+      if (content) {
+        content.style.opacity = '1';
+        content.style.transform = 'translateY(0)';
+      }
+      root.classList.remove('speedx-js');
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
     var group = new THREE.Group();

@@ -56,7 +56,8 @@
   text-transform: uppercase;
 }
 
-.speedx-hero__content { opacity: 0; transform: translateY(30px); }
+.speedx-hero__content { opacity: 1; transform: none; }
+.speedx-hero.speedx-js .speedx-hero__content { opacity: 0; transform: translateY(30px); }
 .speedx-hero__title { font-size: clamp(2rem, 4vw, 4rem); line-height: 1.08; margin: 0 0 1rem; }
 .speedx-hero__subtitle { font-size: clamp(1rem, 1.8vw, 1.25rem); color: rgba(255, 255, 255, 0.82); max-width: 46ch; margin: 0 0 1.6rem; }
 .speedx-hero__button {
